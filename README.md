@@ -9,6 +9,20 @@ Java EE 8 (Jakarta EE 8) と MySQL を使用した Web アプリケーション�
 * **Build Tool:** Maven 3.x
 * **Database:** MySQL 8.0
 
+## 事前準備
+
+### 1. データベースの準備
+MySQL に `auth` データベースを作成し、テスト用のテーブル（`items` など）を用意してください。
+
+### 2. 環境変数の設定 (.env)
+プロジェクトのルートディレクトリ（`pom.xml` と同じ階層）に `.env` ファイルを作成し、接続情報を記述します。
+
+```ini
+AI_SENSEI_DB_URL=jdbc:mysql://localhost:3306/auth?useSSL=false&allowPublicKeyRetrieval=true
+AI_SENSEI_DB_USER=root
+AI_SENSEI_DB_PASS=あなたのパスワード
+```
+
 ## 実行手順
 
 ### 1. ビルド
@@ -26,7 +40,9 @@ mvn payara-micro:start
 ### 3. ブラウザで動作確認
 サーバーの起動完了後、コンソールに `Payara Micro ... ready` と表示されたら、以下のURLにアクセスしてください。
 
-* **Hello World サーブレット:** [http://localhost:8080/javaee-mysql-demo/hello](http://localhost:8080/javaee-mysql-demo/hello)
-* **デフォルト JSP:** [http://localhost:8080/javaee-mysql-demo/](http://localhost:8080/javaee-mysql-demo/)
+
+* http://localhost:8080/javaee-mysql-demo/
+* http://localhost:8080/javaee-mysql-demo/hello
+* http://localhost:8080/javaee-mysql-demo/jdbc
 
 
