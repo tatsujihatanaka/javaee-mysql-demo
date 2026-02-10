@@ -16,6 +16,7 @@ replay_pid*
 
 # --- Maven specific (IMPORTANT) ---
 # ビルド成果物一式を除外
+lib/
 target/
 pom.xml.tag
 pom.xml.releaseBackup

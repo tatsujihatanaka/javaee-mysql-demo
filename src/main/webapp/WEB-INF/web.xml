@@ -7,15 +7,6 @@
 
     <display-name>JavaEE MySQL Demo</display-name>
 
-    <servlet>
-        <servlet-name>JndiServlet</servlet-name>
-        <servlet-class>com.example.JndiServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>JndiServlet</servlet-name>
-        <url-pattern>/JndiServlet</url-pattern>
-    </servlet-mapping>
-
     <resource-ref>
         <description>MySQL Connection Pool</description>
         <res-ref-name>jdbc/mysql</res-ref-name>

@@ -1,57 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>javaee-mysql-demo</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"> <modelVersion>4.0.0</modelVersion>
 
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+<groupId>com.example</groupId>
+<artifactId>javaee-mysql-demo</artifactId>
+<version>1.0-SNAPSHOT</version>
+<packaging>war</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>8.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>8.0.33</version>
-        </dependency>
-    </dependencies>
+<properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+</properties>
 
-    <build>
-        <finalName>javaee-mysql-demo</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.1</version>
-            </plugin>
-            <plugin>
-                <groupId>fish.payara.maven.plugins</groupId>
-                <artifactId>payara-micro-maven-plugin</artifactId>
-                <version>1.4.0</version>
-                <configuration>
-                    <payaraVersion>5.2022.5</payaraVersion>
-                    <deployWar>true</deployWar>
-                    <commandLineOptions>
-                        <option>
-                            <key>--addlibs</key>
-                            <value>target/javaee-mysql-demo/WEB-INF/lib/mysql-connector-j-8.0.33.jar</value>
-                        </option>
-                    </commandLineOptions>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+<dependencies>
+    <dependency>
+        <groupId>javax</groupId>
+        <artifactId>javaee-api</artifactId>
+        <version>8.0.1</version>
+        <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>com.mysql</groupId>
+        <artifactId>mysql-connector-j</artifactId>
+        <version>8.0.33</version>
+    </dependency>
+</dependencies>
+
+<build>
+    <finalName>javaee-mysql-demo</finalName>
+
+    <plugins>
+        <plugin>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>3.1.0</version>
+            <configuration>
+                <filesets>
+                    <fileset>
+                        <directory>lib</directory>
+                        <followSymlinks>false</followSymlinks>
+                    </fileset>
+                </filesets>
+            </configuration>
+        </plugin>
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.3.1</version>
+        </plugin>
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>3.1.2</version>
+            <executions>
+                <execution>
+                    <id>copy-dependencies</id>
+                    <phase>prepare-package</phase>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                    <configuration>
+                        <outputDirectory>${project.basedir}/lib</outputDirectory>
+                        <includeArtifactIds>mysql-connector-j</includeArtifactIds>
+                        <overWriteReleases>false</overWriteReleases>
+                        <overWriteSnapshots>false</overWriteSnapshots>
+                        <overWriteIfNewer>true</overWriteIfNewer>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+
+        <plugin>
+            <groupId>fish.payara.maven.plugins</groupId>
+            <artifactId>payara-micro-maven-plugin</artifactId>
+            <version>1.4.0</version>
+            <configuration>
+                <payaraVersion>5.2022.5</payaraVersion>
+                <deployWar>true</deployWar>
+                <postBootCommandFile>post-boot.txt</postBootCommandFile>
+                <commandLineOptions>
+                    <option>
+                        <key>--addlibs</key>
+                        <value>lib</value>
+                    </option>
+                </commandLineOptions>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
 </project>
