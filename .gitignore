@@ -1,3 +1,8 @@
+# --- Security / Local Environment ---
+# データベースの接続情報などの機密情報を含むため除外
+.env
+post-boot.txt
+
 # --- Existing Defaults ---
 *.class
 *.log
