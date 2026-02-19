@@ -1,0 +1,25 @@
+# --- Payara Micro Post-boot Configuration Template ---
+# 使い方: 
+# 1. このファイルを 'post-boot.txt' という名前でコピーしてください。
+# 2. 'DB_HOST_HERE' と'DB_NAME_HERE' と'DB_USER_HERE' と 'DB_PASSWORD_HERE' を実際の値に書き換えてください。
+# 3. 'post-boot.txt' は .gitignore に追加し、Git管理から除外してください。
+
+# クラスタリングの無効化
+set configs.config.server-config.hazelcast-config-specific-configuration.clustering-enabled=false
+
+# JDBC接続プールの作成
+# 注意: ユーザー名、パスワード、接続先URLを環境に合わせて修正してください
+create-jdbc-connection-pool \
+  --datasourceclassname com.mysql.cj.jdbc.MysqlDataSource \
+  --restype javax.sql.DataSource \
+  --property user=DB_USER_HERE:password=DB_PASSWORD_HERE:url="jdbc\:mysql\://DB_HOST_HERE\:3306/DB_NAME_HERE?useSSL=false&allowPublicKeyRetrieval=true" \
+  MyPool
+
+# JDBCリソース（JNDI名）の作成
+# アプリケーションからは 'jdbc/mysql' という名前で参照します
+create-jdbc-resource --connectionpoolid MyPool jdbc/mysql
+
+
+
+
+

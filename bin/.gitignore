@@ -1,0 +1,45 @@
+# --- Security / Local Environment ---
+# データベースの接続情報などの機密情報を含むため除外
+.env
+post-boot.txt
+
+# --- Existing Defaults ---
+*.class
+*.log
+*.ctxt
+.mtj.tmp/
+# Payara Microや配布用ファイルを除外
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+replay_pid*
+
+# --- Maven specific (IMPORTANT) ---
+# ビルド成果物一式を除外
+lib/
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.restore
+
+# --- IDE specific ---
+# VS Code
+.vscode/
+# IntelliJ
+.idea/
+*.iml
+# Eclipse
+.classpath
+.project
+.settings/
+.factorypath
+
+# --- OS specific ---
+.DS_Store
+Thumbs.db
