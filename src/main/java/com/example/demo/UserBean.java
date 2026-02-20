@@ -1,25 +1,42 @@
 package com.example.demo;
 
+import java.io.Serializable; // 追加
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional; // 追加：これが必要です
 
 import com.example.entity.User;
 
-@Named("userBean") // JSPから ${userBean} で呼べるようにする魔法のアノテーション
-@RequestScoped     // 1回のリクエスト（画面表示）の間だけ生存する設定
-public class UserBean {
+@Named("userBean")
+@RequestScoped
+public class UserBean implements Serializable { // RequestScopedならSerializable推奨
 
-    @PersistenceContext(unitName = "myPU") // persistence.xml の persistence-unit name と合わせる
+    @PersistenceContext(unitName = "myPU")
     private EntityManager em;
 
-    /**
-     * DBから全ユーザーを取得してリストで返すメソッド
-     */
+    // ★ 追加：登録フォームの入力値を保持するためのオブジェクト
+    private User newUser = new User();
+
     public List<User> getAllUsers() {
         return em.createQuery("SELECT u FROM User u", User.class).getResultList();
+    }
+
+    @Transactional
+    public String save() {
+        em.persist(newUser); // これで定義済みの newUser が保存されます
+        return "index?faces-redirect=true"; // 一覧画面へ戻る（JSFの場合）
+    }
+
+    // ★ 追加：JSPのフォームからアクセスするためにGetter/Setterが必要
+    public User getNewUser() {
+        return newUser;
+    }
+
+    public void setNewUser(User newUser) {
+        this.newUser = newUser;
     }
 }

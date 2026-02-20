@@ -7,6 +7,11 @@
         table { border-collapse: collapse; width: 80%; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
         th { background-color: #f4f4f4; }
+        hr {
+            margin: 30px 0; /* 上下に30pxの隙間を作る */
+            border: 0;
+            border-top: 1px solid #eee; /* 線の色を少し薄くして上品に */
+            }
     </style>
 </head>
 <body>
@@ -38,5 +43,18 @@
     <c:if test="${empty userBean.allUsers}">
         <p>ユーザーが見つかりません。DBにデータが入っているか確認してください。</p>
     </c:if>
+
+<hr>
+<fieldset>
+    <legend>新規ユーザー登録</legend>
+    <form action="register" method="post">
+        名前: <input type="text" name="name" required><br>
+        メール: <input type="email" name="email" required><br>
+        パスワード: <input type="password" name="password" required>
+        <button type="submit">登録する</button>
+    </form>
+</fieldset>
+<hr>
+
 </body>
 </html>
