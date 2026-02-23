@@ -25,6 +25,17 @@ public class UserBean implements Serializable { // RequestScopedならSerializab
         return em.createQuery("SELECT u FROM User u", User.class).getResultList();
     }
 
+    public User findByEmail(String email) {
+        try {
+            return em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (Exception e) {
+            // ユーザーが見つからない場合は null を返す
+            return null;
+        }
+    }
+
     @Transactional
     public String save() {
         em.persist(newUser); // これで定義済みの newUser が保存されます
